@@ -51,3 +51,156 @@ evolutionary barriers on *M. tuberculosis*.
 ---
 
 ## Repository Structure
+
+PolyTB-GNN/
+│
+├── PolyTB_GNN.ipynb          # Main Colab notebook (full pipeline)
+│
+├── data/
+│   ├── TB_multitarget_long.csv      # Long-format dataset (all targets)
+│   ├── TB_multitarget_full.csv      # Wide-format dataset
+│   └── top_candidates_MTRS.csv      # Top-20 MTRS-ranked candidates
+│
+├── figures/
+│   ├── fig1_dataset_stats.png       # Dataset statistics
+│   ├── fig2_model_comparison.png    # Model comparison (headline result)
+│   ├── fig3_scatter_plots.png       # Predicted vs actual scatter plots
+│   ├── fig4_architecture.png        # PolyTB-GNN architecture diagram
+│   └── fig5_top20_candidates.png    # Top-20 MTRS candidates
+│
+├── models/
+│   ├── gcn_baseline.pt              # Trained GCN baseline weights
+│   ├── gat_baseline.pt              # Trained GAT baseline weights
+│   ├── polytb_gnn_v3.pt             # PolyTB-GNN v3 weights
+│   └── polytb_gnn_v3_finetuned.pt   # PolyTB-GNN v3 fine-tuned weights (best)
+│
+├── requirements.txt                 # Python dependencies
+├── LICENSE                          # MIT License
+└── README.md                        # This file
+
+---
+
+## Installation
+
+### Option 1 — Google Colab (Recommended)
+
+Open the notebook directly in Colab and run all cells in order. 
+All dependencies install automatically within the notebook.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](YOUR_COLAB_LINK_HERE)
+
+### Option 2 — Local Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/PolyTB-GNN.git
+cd PolyTB-GNN
+
+# Create virtual environment
+python -m venv polytb_env
+source polytb_env/bin/activate  # On Windows: polytb_env\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+---
+
+## Requirements
+torch>=2.0.0
+torch-geometric>=2.3.0
+torch-scatter>=2.1.0
+torch-sparse>=0.6.17
+rdkit>=2023.3.1
+chembl-webresource-client>=0.10.9
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+tqdm>=4.65.0
+
+---
+
+## Notebook Pipeline
+
+The notebook `PolyTB_GNN.ipynb` is organized into the following modules:
+
+| Module | Description |
+|---|---|
+| **Module 1** | ChEMBL data collection and curation for InhA, KasA, DprE1 |
+| **Module 2** | Molecular featurization — 3D graph construction + atom/bond features |
+| **Module 3** | Baseline models — GCN and GAT training and evaluation |
+| **Module 4** | PolyTB-GNN — architecture, training, ablation study, fine-tuning |
+| **Module 5** | Results and figures — all publication-ready plots |
+
+---
+
+## Dataset
+
+The curated dataset was sourced from the ChEMBL database (v33) using the 
+following target ChEMBL IDs:
+
+| Target | ChEMBL ID | Role in MDR-TB | Molecules |
+|---|---|---|---|
+| InhA | CHEMBL2366517 | FAS-II enoyl reductase | 1,241 |
+| KasA | CHEMBL3192 | FAS-II β-ketoacyl synthase | 2,969 |
+| DprE1 | CHEMBL3804751 | Arabinogalactan biosynthesis | 124 |
+
+**Preprocessing pipeline:**
+- Fragment removal (largest fragment heuristic)
+- Charge neutralization (RDKit Uncharger)
+- Deduplication by InChIKey (median pChEMBL for duplicates)
+- Activity labeling: active (pChEMBL ≥ 6.0), intermediate (5–6), inactive (< 5)
+
+---
+
+## Multi-Target Resilience Score (MTRS)
+
+The MTRS is a novel metric introduced in this work to rank drug candidates 
+for MDR-resilience. It is defined as the harmonic mean of predicted pKᵢ 
+values across all three targets:
+
+$$\text{MTRS} = \frac{3}{\frac{1}{\hat{y}_{\text{InhA}}} + \frac{1}{\hat{y}_{\text{KasA}}} + \frac{1}{\hat{y}_{\text{DprE1}}}}$$
+
+The harmonic mean penalizes weakness on any single target — a molecule 
+scoring 9/9/2 receives MTRS ≈ 3.6, while a molecule scoring 7/7/7 
+receives MTRS = 7.0 — directly operationalizing the biological requirement 
+for multi-pathway inhibition.
+
+---
+
+## Citation
+
+If you use PolyTB-GNN, the dataset, or any code from this repository in 
+your research, please cite:
+
+```bibtex
+@article{polytbgnn2025,
+  title   = {PolyTB-GNN: A Dual-Branch Cross-Attention Graph Neural Network 
+             for Multi-Target Binding Affinity Prediction in MDR-Tuberculosis 
+             Drug Discovery},
+  author  = {[Your Name] and [Co-Author Name]},
+  journal = {Computers in Biology and Medicine},
+  year    = {2025},
+  note    = {Under Review}
+}
+```
+
+---
+
+## License
+
+This project is licensed under the MIT License. 
+
+---
+
+## Acknowledgements
+
+Bioactivity data sourced from ChEMBL (EMBL-EBI). 
+Molecular processing performed using RDKit (Greg Landrum et al.). 
+Graph neural network implementation built on PyTorch Geometric (Fey & Lenssen, 2019).
+
+---
+
