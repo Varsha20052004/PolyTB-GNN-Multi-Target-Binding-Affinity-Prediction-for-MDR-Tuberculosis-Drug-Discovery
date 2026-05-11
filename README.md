@@ -62,7 +62,7 @@ All dependencies install automatically within the notebook.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/PolyTB-GNN.git
+git clone https://github.com/Varsha20052004/PolyTB-GNN.git
 cd PolyTB-GNN
 
 # Create virtual environment
