@@ -4,7 +4,6 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 [![PyG](https://img.shields.io/badge/PyTorch_Geometric-2.3+-orange.svg)](https://pytorch-geometric.readthedocs.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Paper: Under Review](https://img.shields.io/badge/Paper-Under%20Review-yellow.svg)]()
 
 > **Official implementation of PolyTB-GNN**, a dual-branch cross-attention 
 > Graph Neural Network for simultaneous multi-target binding affinity 
@@ -47,36 +46,6 @@ evolutionary barriers on *M. tuberculosis*.
 | PolyTB-GNN v2 (Stabilized E3) | 0.762 | 0.129 | 0.335 | 0.409 |
 | PolyTB-GNN v3 (Dual-Branch) | 0.837 | 0.398 | 0.753 | 0.663 |
 | **PolyTB-GNN v3-ft (Ours)** | **0.825** | **0.423** | **0.890** | **0.713** |
-
----
-
-## Repository Structure
-
-PolyTB-GNN/
-│
-├── PolyTB_GNN.ipynb          # Main Colab notebook (full pipeline)
-│
-├── data/
-│   ├── TB_multitarget_long.csv      # Long-format dataset (all targets)
-│   ├── TB_multitarget_full.csv      # Wide-format dataset
-│   └── top_candidates_MTRS.csv      # Top-20 MTRS-ranked candidates
-│
-├── figures/
-│   ├── fig1_dataset_stats.png       # Dataset statistics
-│   ├── fig2_model_comparison.png    # Model comparison (headline result)
-│   ├── fig3_scatter_plots.png       # Predicted vs actual scatter plots
-│   ├── fig4_architecture.png        # PolyTB-GNN architecture diagram
-│   └── fig5_top20_candidates.png    # Top-20 MTRS candidates
-│
-├── models/
-│   ├── gcn_baseline.pt              # Trained GCN baseline weights
-│   ├── gat_baseline.pt              # Trained GAT baseline weights
-│   ├── polytb_gnn_v3.pt             # PolyTB-GNN v3 weights
-│   └── polytb_gnn_v3_finetuned.pt   # PolyTB-GNN v3 fine-tuned weights (best)
-│
-├── requirements.txt                 # Python dependencies
-├── LICENSE                          # MIT License
-└── README.md                        # This file
 
 ---
 
