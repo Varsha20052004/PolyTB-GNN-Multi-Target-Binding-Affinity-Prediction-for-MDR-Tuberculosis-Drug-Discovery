@@ -140,22 +140,7 @@ for multi-pathway inhibition.
 
 ---
 
-## Citation
 
-If you use PolyTB-GNN, the dataset, or any code from this repository in 
-your research, please cite:
-
-```bibtex
-@article{polytbgnn2025,
-  title   = {PolyTB-GNN: A Dual-Branch Cross-Attention Graph Neural Network 
-             for Multi-Target Binding Affinity Prediction in MDR-Tuberculosis 
-             Drug Discovery},
-  author  = {[Your Name] and [Co-Author Name]},
-  journal = {Computers in Biology and Medicine},
-  year    = {2025},
-  note    = {Under Review}
-}
-```
 
 ---
 
